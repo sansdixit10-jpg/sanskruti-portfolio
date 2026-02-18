@@ -1,18 +1,25 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Linkedin, Github, Send } from "lucide-react";
+import { Mail, Linkedin, Github, Send, CheckCircle } from "lucide-react";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // placeholder
-    alert("Thanks for reaching out! I'll get back to you soon.");
+    setSubmitted(true);
     setForm({ name: "", email: "", message: "" });
+    setTimeout(() => setSubmitted(false), 3000);
   };
+
+  const socials = [
+    { icon: Mail, label: "Email", value: "sanskruti@example.com", href: "mailto:sanskruti@example.com" },
+    { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/sanskruti", href: "#" },
+    { icon: Github, label: "GitHub", value: "github.com/sanskruti", href: "#" },
+  ];
 
   return (
     <section id="contact" className="relative" ref={ref}>
@@ -41,17 +48,13 @@ const ContactSection = () => {
             </p>
 
             <div className="space-y-4">
-              {[
-                { icon: Mail, label: "Email", value: "sanskruti@example.com", href: "mailto:sanskruti@example.com" },
-                { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/sanskruti", href: "#" },
-                { icon: Github, label: "GitHub", value: "github.com/sanskruti", href: "#" },
-              ].map((item) => (
+              {socials.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="glass-card p-4 flex items-center gap-4 hover-lift block"
+                  className="glass-card p-4 flex items-center gap-4 hover-lift block group"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:shadow-[var(--glow-primary)] transition-all">
                     <item.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
@@ -68,30 +71,37 @@ const ContactSection = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="glass-card p-6 space-y-4"
+            className="glass-card p-6 space-y-4 relative overflow-hidden"
           >
-            <div>
-              <label className="text-xs text-muted-foreground mb-1.5 block">Name</label>
-              <input
-                type="text"
-                required
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
-                placeholder="Your name"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-muted-foreground mb-1.5 block">Email</label>
-              <input
-                type="email"
-                required
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
-                placeholder="your@email.com"
-              />
-            </div>
+            {submitted && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="absolute inset-0 flex flex-col items-center justify-center z-10"
+                style={{ background: "var(--glass-bg)" }}
+              >
+                <CheckCircle className="w-12 h-12 text-primary mb-3" />
+                <p className="font-display font-semibold">Message Sent!</p>
+                <p className="text-sm text-muted-foreground">I'll get back to you soon.</p>
+              </motion.div>
+            )}
+
+            {[
+              { label: "Name", type: "text", key: "name" as const, placeholder: "Your name" },
+              { label: "Email", type: "email", key: "email" as const, placeholder: "your@email.com" },
+            ].map((field) => (
+              <div key={field.key} className="group">
+                <label className="text-xs text-muted-foreground mb-1.5 block">{field.label}</label>
+                <input
+                  type={field.type}
+                  required
+                  value={form[field.key]}
+                  onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+                  placeholder={field.placeholder}
+                />
+              </div>
+            ))}
             <div>
               <label className="text-xs text-muted-foreground mb-1.5 block">Message</label>
               <textarea
@@ -99,7 +109,7 @@ const ContactSection = () => {
                 rows={4}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 transition resize-none"
+                className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all resize-none"
                 placeholder="Tell me about your project..."
               />
             </div>
@@ -113,7 +123,6 @@ const ContactSection = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <div className="border-t border-border mt-24">
         <div className="max-w-6xl mx-auto px-6 py-8 text-center">
           <p className="text-sm text-muted-foreground">
