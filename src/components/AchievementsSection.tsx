@@ -16,65 +16,65 @@ const certifications = [
   "React Development — Udemy",
 ];
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const AchievementsSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section id="achievements" className="relative" ref={ref}>
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease }}
+          className="text-center mb-14"
         >
-          <p className="text-sm tracking-[0.2em] uppercase text-primary mb-3">Recognition</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold">
+          <p className="section-label">Recognition</p>
+          <h2 className="section-title">
             Achievements & <span className="text-gradient">Certifications</span>
           </h2>
         </motion.div>
 
-        {/* Achievements */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
           {achievements.map((a, i) => (
             <motion.div
               key={a.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
+              transition={{ duration: 0.5, delay: 0.15 + i * 0.08, ease }}
               className="glass-card p-6 text-center hover-lift group"
             >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:shadow-[var(--glow-primary)] transition-all">
-                <a.icon className="w-6 h-6 text-primary" />
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/15 transition-colors duration-300">
+                <a.icon className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="font-display font-semibold text-sm mb-1">{a.title}</h3>
-              <p className="text-xs text-muted-foreground">{a.desc}</p>
+              <h3 className="font-display font-semibold text-xs mb-1 tracking-tight">{a.title}</h3>
+              <p className="text-[10px] text-muted-foreground leading-relaxed">{a.desc}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* Certifications */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="max-w-2xl mx-auto"
+          transition={{ duration: 0.7, delay: 0.5, ease }}
+          className="max-w-xl mx-auto"
         >
-          <h3 className="font-display text-xl font-semibold text-center mb-8">Certifications</h3>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <h3 className="font-display text-lg font-semibold text-center mb-8 tracking-tight">Certifications</h3>
+          <div className="grid sm:grid-cols-2 gap-3">
             {certifications.map((cert, i) => (
               <motion.div
                 key={cert}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -10 : 10 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.7 + i * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.06, ease }}
                 className="glass-card p-4 flex items-center gap-3 hover-lift"
               >
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Award className="w-4 h-4 text-primary" />
+                <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <Award className="w-3.5 h-3.5 text-primary" />
                 </div>
-                <span className="text-sm font-medium">{cert}</span>
+                <span className="text-xs font-medium">{cert}</span>
               </motion.div>
             ))}
           </div>

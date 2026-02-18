@@ -36,22 +36,22 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -80 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled ? "glass shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="font-display text-xl font-bold text-gradient">
+      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#" className="font-display text-lg font-bold text-gradient tracking-tight">
           SD
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className={`relative text-sm font-medium transition-colors ${
+              className={`relative text-xs font-medium tracking-wide transition-colors duration-300 ${
                 activeSection === link.href.slice(1)
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -61,8 +61,9 @@ const Navbar = () => {
               {activeSection === link.href.slice(1) && (
                 <motion.span
                   layoutId="nav-underline"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full"
+                  className="absolute -bottom-1 left-0 right-0 h-px rounded-full"
                   style={{ background: "var(--gradient-primary)" }}
+                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 />
               )}
             </a>
@@ -70,7 +71,7 @@ const Navbar = () => {
           <ThemeToggle />
           <a
             href="#contact"
-            className="text-sm font-medium px-5 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+            className="text-xs font-medium px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity duration-300"
           >
             Hire Me
           </a>
@@ -83,18 +84,19 @@ const Navbar = () => {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`block w-6 h-0.5 bg-foreground transition-transform ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-foreground transition-opacity ${mobileOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-foreground transition-transform ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block w-5 h-px bg-foreground transition-transform duration-300 ${mobileOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
+            <span className={`block w-5 h-px bg-foreground transition-opacity duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-px bg-foreground transition-transform duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
           </button>
         </div>
       </div>
 
       {mobileOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden glass border-t border-border"
+          transition={{ duration: 0.3 }}
+          className="md:hidden glass border-t border-border/50"
         >
           <div className="flex flex-col p-6 gap-4">
             {navLinks.map((link) => (
@@ -102,7 +104,7 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-300"
               >
                 {link.label}
               </a>

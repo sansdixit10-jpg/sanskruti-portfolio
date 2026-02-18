@@ -20,41 +20,43 @@ const testimonials = [
   },
 ];
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const TestimonialsSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section className="relative" ref={ref}>
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease }}
+          className="text-center mb-14"
         >
-          <p className="text-sm tracking-[0.2em] uppercase text-primary mb-3">Testimonials</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold">
+          <p className="section-label">Testimonials</p>
+          <h2 className="section-title">
             What People <span className="text-gradient">Say</span>
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.15 }}
-              className="glass-card p-6 hover-lift"
+              transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease }}
+              className="glass-card p-7 hover-lift"
             >
-              <Quote className="w-8 h-8 text-primary/30 mb-4" />
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6 italic">
+              <Quote className="w-6 h-6 text-primary/20 mb-5" />
+              <p className="text-xs text-muted-foreground leading-[1.8] mb-6 italic">
                 "{t.text}"
               </p>
               <div>
-                <p className="font-display font-semibold text-sm">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.role}</p>
+                <p className="font-display font-semibold text-xs tracking-tight">{t.name}</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">{t.role}</p>
               </div>
             </motion.div>
           ))}
