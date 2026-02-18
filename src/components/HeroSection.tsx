@@ -9,6 +9,8 @@ const subtitles = [
   "Data Science Enthusiast",
 ];
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const HeroSection = () => {
   const [currentText, setCurrentText] = useState("");
   const [subtitleIndex, setSubtitleIndex] = useState(0);
@@ -22,7 +24,7 @@ const HeroSection = () => {
         if (!deleting) {
           setCurrentText(target.slice(0, charIndex + 1));
           if (charIndex + 1 === target.length) {
-            setTimeout(() => setDeleting(true), 1500);
+            setTimeout(() => setDeleting(true), 2000);
           } else {
             setCharIndex(charIndex + 1);
           }
@@ -36,7 +38,7 @@ const HeroSection = () => {
           }
         }
       },
-      deleting ? 40 : 80
+      deleting ? 35 : 70
     );
     return () => clearTimeout(timeout);
   }, [charIndex, deleting, subtitleIndex]);
@@ -49,91 +51,92 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center hero-gradient-bg overflow-hidden">
-      <div className="floating-orb w-[500px] h-[500px] bg-primary/30 top-[-10%] left-[-10%]" />
-      <div className="floating-orb w-[400px] h-[400px] bg-accent/20 bottom-[-10%] right-[-10%]" style={{ animationDelay: "3s" }} />
-      <div className="floating-orb w-[200px] h-[200px] bg-primary/20 top-[40%] right-[20%]" style={{ animationDelay: "5s" }} />
+      <div className="floating-orb w-[600px] h-[600px] bg-primary/20 top-[-15%] left-[-15%]" />
+      <div className="floating-orb w-[500px] h-[500px] bg-accent/15 bottom-[-15%] right-[-15%]" style={{ animationDelay: "4s" }} />
+      <div className="floating-orb w-[250px] h-[250px] bg-primary/10 top-[45%] right-[15%]" style={{ animationDelay: "7s" }} />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm md:text-base tracking-[0.3em] uppercase text-muted-foreground mb-6"
+          transition={{ duration: 0.8, delay: 0.3, ease }}
+          className="text-xs md:text-sm tracking-[0.3em] uppercase text-muted-foreground/70 mb-8"
         >
           Welcome to my portfolio
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-4"
+          transition={{ duration: 0.9, delay: 0.5, ease }}
+          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-6 tracking-tight"
         >
-          Sanskruti <span className="text-gradient">Dixit</span>
+          Sanskruti{" "}
+          <span className="text-gradient">Dixit</span>
         </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 h-8"
+          transition={{ duration: 0.7, delay: 0.7, ease }}
+          className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-5 h-7 font-light"
         >
           <span>{currentText}</span>
-          <span className="inline-block w-0.5 h-5 bg-primary ml-1 animate-pulse" />
+          <span className="inline-block w-px h-5 bg-primary/60 ml-0.5 animate-pulse" />
         </motion.div>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.75 }}
-          className="text-sm md:text-base text-muted-foreground/70 max-w-xl mx-auto mb-10"
+          transition={{ duration: 0.7, delay: 0.85, ease }}
+          className="text-sm text-muted-foreground/60 max-w-md mx-auto mb-12 leading-relaxed"
         >
-          Crafting intelligent systems and elegant digital experiences through the power of AI, data, and modern web technologies.
+          Crafting intelligent systems and elegant digital experiences through AI, data, and modern web technologies.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
+          transition={{ duration: 0.7, delay: 1, ease }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
         >
           <a
             href="#projects"
-            className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+            className="px-7 py-3 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
           >
             View Projects
           </a>
           <a
             href="#contact"
-            className="px-8 py-3.5 rounded-full glass font-medium text-foreground hover-lift"
+            className="px-7 py-3 rounded-full glass text-sm font-medium text-foreground hover-lift"
           >
             Contact Me
           </a>
           <a
             href="#"
-            className="px-8 py-3.5 rounded-full glass font-medium text-foreground hover-lift flex items-center gap-2"
+            className="px-7 py-3 rounded-full glass text-sm font-medium text-foreground hover-lift flex items-center gap-2"
           >
-            <Download className="w-4 h-4" /> Resume
+            <Download className="w-3.5 h-3.5" /> Resume
           </a>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="flex items-center justify-center gap-4"
+          transition={{ delay: 1.3, duration: 0.8 }}
+          className="flex items-center justify-center gap-3"
         >
           {socials.map((s, i) => (
             <motion.a
               key={s.label}
               href={s.href}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3 + i * 0.1 }}
-              className="w-10 h-10 rounded-full glass flex items-center justify-center hover:scale-110 hover:shadow-[var(--glow-primary)] transition-all"
+              transition={{ delay: 1.4 + i * 0.08, duration: 0.5, ease }}
+              className="w-9 h-9 rounded-full glass flex items-center justify-center hover:scale-105 transition-all duration-300"
               aria-label={s.label}
             >
-              <s.icon className="w-4 h-4 text-muted-foreground" />
+              <s.icon className="w-3.5 h-3.5 text-muted-foreground" />
             </motion.a>
           ))}
         </motion.div>
@@ -141,12 +144,12 @@ const HeroSection = () => {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        animate={{ opacity: 0.5 }}
+        transition={{ delay: 1.8, duration: 1 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2"
       >
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
-          <ArrowDown className="w-5 h-5 text-muted-foreground" />
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}>
+          <ArrowDown className="w-4 h-4 text-muted-foreground" />
         </motion.div>
       </motion.div>
     </section>

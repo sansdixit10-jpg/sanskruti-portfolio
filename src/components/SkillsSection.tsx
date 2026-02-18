@@ -37,12 +37,14 @@ const categories = [
   },
 ];
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const AnimatedCounter = ({ target, inView }: { target: number; inView: boolean }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!inView) return;
     let current = 0;
-    const step = Math.ceil(target / 30);
+    const step = Math.ceil(target / 40);
     const interval = setInterval(() => {
       current += step;
       if (current >= target) {
@@ -51,7 +53,7 @@ const AnimatedCounter = ({ target, inView }: { target: number; inView: boolean }
       } else {
         setCount(current);
       }
-    }, 30);
+    }, 25);
     return () => clearInterval(interval);
   }, [inView, target]);
   return <span>{count}%</span>;
@@ -59,7 +61,7 @@ const AnimatedCounter = ({ target, inView }: { target: number; inView: boolean }
 
 const SkillsSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
   const [activeCategory, setActiveCategory] = useState("Programming");
 
   const active = categories.find((c) => c.name === activeCategory)!;
@@ -68,29 +70,29 @@ const SkillsSection = () => {
     <section id="skills" className="relative" ref={ref}>
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease }}
+          className="text-center mb-14"
         >
-          <p className="text-sm tracking-[0.2em] uppercase text-primary mb-3">Skills</p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold">
+          <p className="section-label">Skills</p>
+          <h2 className="section-title">
             My <span className="text-gradient">Tech Stack</span>
           </h2>
         </motion.div>
 
         {/* Category Tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          transition={{ duration: 0.6, delay: 0.15, ease }}
+          className="flex flex-wrap justify-center gap-2 mb-14"
         >
           {categories.map((cat) => (
             <button
               key={cat.name}
               onClick={() => setActiveCategory(cat.name)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`px-5 py-2 rounded-full text-xs font-medium tracking-wide transition-all duration-300 ${
                 activeCategory === cat.name
                   ? "bg-primary text-primary-foreground"
                   : "glass text-muted-foreground hover:text-foreground"
@@ -102,31 +104,31 @@ const SkillsSection = () => {
         </motion.div>
 
         {/* Skill Bars */}
-        <div className="max-w-2xl mx-auto space-y-6">
+        <div className="max-w-xl mx-auto space-y-5">
           {active.skills.map((skill, i) => (
             <motion.div
               key={skill.name}
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -16 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+              transition={{ duration: 0.5, delay: 0.25 + i * 0.08, ease }}
               className="glass-card p-5 group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors group-hover:shadow-[var(--glow-primary)]">
-                    <skill.icon className="w-4 h-4 text-primary" />
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors duration-300">
+                    <skill.icon className="w-3.5 h-3.5 text-primary" />
                   </div>
-                  <span className="font-display font-semibold text-sm">{skill.name}</span>
+                  <span className="font-display font-medium text-sm tracking-tight">{skill.name}</span>
                 </div>
-                <span className="text-sm font-semibold text-primary">
+                <span className="text-xs font-medium text-primary/80 tabular-nums">
                   <AnimatedCounter target={skill.level} inView={inView} />
                 </span>
               </div>
-              <div className="h-2 rounded-full bg-secondary overflow-hidden">
+              <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={inView ? { width: `${skill.level}%` } : {}}
-                  transition={{ duration: 1, delay: 0.5 + i * 0.1, ease: "easeOut" }}
+                  transition={{ duration: 1.2, delay: 0.4 + i * 0.08, ease: "easeOut" }}
                   className="h-full rounded-full"
                   style={{ background: "var(--gradient-primary)" }}
                 />
