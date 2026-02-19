@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
+import profile from "../assets/pf.jpg";
 
 const subtitles = [
   "AI & Software Developer",
